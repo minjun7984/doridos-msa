@@ -21,13 +21,14 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
 
-    @Cacheable(value = "tickets", cacheManager = "redisCacheManager", key = "#ticketId", condition = "#ticketId != null")
+    @Cacheable(value = "tickets")
     @Transactional(readOnly = true)
     public TicketInfoResponse ticketInfo(final Long ticketId) {
         final Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> {
             throw new TicketNotFoundException(ErrorCode.TICKET_NOT_FOUND); });
 
-        return TicketInfoResponse.of(ticket);
+        TicketInfoResponse response = TicketInfoResponse.of(ticket);
+        return response;
     }
 
     @Transactional(readOnly = true)
