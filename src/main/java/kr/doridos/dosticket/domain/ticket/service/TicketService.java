@@ -7,8 +7,6 @@ import kr.doridos.dosticket.domain.ticket.exception.TicketNotFoundException;
 import kr.doridos.dosticket.domain.ticket.repository.TicketRepository;
 import kr.doridos.dosticket.exception.ErrorCode;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +21,7 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
 
-    @Cacheable(value = "tickets", key = "#ticketId", condition = "#ticketId != null")
+    @Cacheable(value = "tickets", cacheManager = "redisCacheManager", key = "#ticketId", condition = "#ticketId != null")
     @Transactional(readOnly = true)
     public TicketInfoResponse ticketInfo(final Long ticketId) {
         final Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> {
