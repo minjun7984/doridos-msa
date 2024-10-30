@@ -30,10 +30,7 @@ public class RedisConfig {
 
     @Value("${spring.redis.port}")
     private int port;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
+    
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
