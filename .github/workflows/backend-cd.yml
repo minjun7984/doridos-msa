@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - develop
-      - feature/#97-cd-test
+      - feature/#85-redis-cache
 
 jobs:
   docker-build:
