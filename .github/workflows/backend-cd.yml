@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - develop
-      - remove-cache-test
+      - feature/remove-cache-test
 
 jobs:
   docker-build:
