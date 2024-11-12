@@ -52,6 +52,7 @@
 - Github Actions 이용한 CI 환경 구축 [(해당 과정 포스팅)](https://alswns7984.tistory.com/77)
 
 ![인프라](https://github.com/minjun7984/readme-image/blob/main/cicd.jpeg)
+![구성도](https://github.com/minjun7984/readme-image/blob/main/%E1%84%83%E1%85%A9%E1%84%89%E1%85%B3%E1%84%90%E1%85%B5%E1%84%8F%E1%85%A6%E1%86%BA%20%E1%84%80%E1%85%AE%E1%84%89%E1%85%A5%E1%86%BC%E1%84%83%E1%85%A9.png)
 </br>
 </br>
 ## 테스트
