@@ -38,6 +38,11 @@
      [-> Spring RestDocs를 활용한 API 문서화 포스팅](https://alswns7984.tistory.com/26)
 </br>
 
+5. **페이징 기능 제공**: 일반, 카테고리, 날짜별 페이징 기능을 제공합니다.
+
+     [-> QueryDsl을 활용한 페이징 기능 구현 포스팅](https://alswns7984.tistory.com/82)
+</br>
+
 
 ## ⚙️ 기술 스택 
 ![기술스택](https://github.com/minjun7984/readme-image/blob/main/KakaoTalk_Photo_2024-10-13-19-31-51.jpeg)
