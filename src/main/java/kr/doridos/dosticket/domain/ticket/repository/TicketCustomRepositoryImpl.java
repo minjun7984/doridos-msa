@@ -9,12 +9,14 @@ import kr.doridos.dosticket.domain.ticket.dto.QTicketPageResponse;
 import kr.doridos.dosticket.domain.ticket.dto.TicketPageResponse;
 import kr.doridos.dosticket.domain.ticket.entity.QTicket;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 
 public class TicketCustomRepositoryImpl implements TicketCustomRepository {
@@ -30,8 +32,13 @@ public class TicketCustomRepositoryImpl implements TicketCustomRepository {
         QTicket qTicket = QTicket.ticket;
 
         Predicate condition = createCondition(qTicket, startDate, endDate, categoryId);
+        List<Long> ids = fetchTicketIds(qTicket, condition, pageable);
 
-        List<TicketPageResponse> ticketPageResponse = findTicketPageResponse(qTicket, pageable, condition);
+        if (ids.isEmpty()) {
+            return new PageImpl<>(Collections.emptyList(), pageable, 0);
+        }
+
+        List<TicketPageResponse> ticketPageResponse = fetchTicketsByIds(qTicket, ids);
         JPAQuery<Long> countQuery = createCountQuery(qTicket, condition);
 
         return PageableExecutionUtils.getPage(ticketPageResponse, pageable, countQuery::fetchOne);
@@ -55,7 +62,18 @@ public class TicketCustomRepositoryImpl implements TicketCustomRepository {
         return condition;
     }
 
-    private List<TicketPageResponse> findTicketPageResponse(QTicket qTicket, Pageable pageable, Predicate condition) {
+    private List<Long> fetchTicketIds(QTicket qTicket, Predicate condition, Pageable pageable) {
+        return jpaQueryFactory
+                .select(qTicket.id)
+                .from(qTicket)
+                .where(condition)
+                .orderBy(qTicket.startDate.desc()) // 페이징을 위한 정렬
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+    }
+
+    private List<TicketPageResponse> fetchTicketsByIds(QTicket qTicket, List<Long> ids) {
         return jpaQueryFactory
                 .select(new QTicketPageResponse(
                         qTicket.id,
@@ -67,10 +85,8 @@ public class TicketCustomRepositoryImpl implements TicketCustomRepository {
                         qTicket.startDate
                 ))
                 .from(qTicket)
-                .where(condition)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(qTicket.startDate.asc())
+                .where(qTicket.id.in(ids))
+                .orderBy(qTicket.startDate.desc())
                 .fetch();
     }
 
@@ -89,5 +105,3 @@ public class TicketCustomRepositoryImpl implements TicketCustomRepository {
                 .fetch();
     }
 }
-
-
