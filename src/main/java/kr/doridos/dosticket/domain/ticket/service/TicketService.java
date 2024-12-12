@@ -21,7 +21,7 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
 
-    //@Cacheable(value = "tickets")
+    @Cacheable(value = "tickets")
     @Transactional(readOnly = true)
     public TicketInfoResponse ticketInfo(final Long ticketId) {
         final Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> {
