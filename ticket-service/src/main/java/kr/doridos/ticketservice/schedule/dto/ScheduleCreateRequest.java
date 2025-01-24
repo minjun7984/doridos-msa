@@ -1,0 +1,38 @@
+package kr.doridos.ticketservice.schedule.dto;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
+import kr.doridos.ticketservice.schedule.entity.Schedule;
+import kr.doridos.ticketservice.ticket.entity.Ticket;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ScheduleCreateRequest {
+
+    @NotBlank
+    private Long ticketId;
+
+    @NotBlank
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime startTime;
+
+    @NotBlank
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime endTime;
+
+    public Schedule toEntity(final Ticket ticket) {
+        return Schedule.builder()
+                .startDate(startTime)
+                .endDate(endTime)
+                .ticket(ticket)
+                .build();
+    }
+}

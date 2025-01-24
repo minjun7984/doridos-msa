@@ -1,0 +1,60 @@
+package kr.doridos.ticketservice.ticket.dto;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
+import kr.doridos.common.auth.UserInfo;
+import kr.doridos.ticketservice.category.entity.Category;
+import kr.doridos.ticketservice.place.entity.Place;
+import kr.doridos.ticketservice.ticket.entity.Ticket;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class TicketCreateRequest {
+
+    @NotBlank(message = "제목은 빈값일 수 없습니다.")
+    private String title;
+
+    @NotBlank(message = "상세 내용은 빈값일 수 없습니다.")
+    private String content;
+
+    @NotBlank(message = "runningTime 빈값일 수 없습니다.")
+    private String runningTime;
+
+    @NotBlank(message = "예매시작일은 빈값일 수 없습니다.")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime openDate;
+
+    @NotBlank(message = "공연마감일 빈값일 수 없습니다.")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime endDate;
+
+    @NotBlank(message = "공연시작일 빈값일 수 없습니다.")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime startDate;
+
+    @NotBlank(message = "placeId 빈값일 수 없습니다.")
+    private Long placeId;
+
+    @NotBlank(message = "categoryId 빈값일 수 없습니다.")
+    private Long categoryId;
+
+    public Ticket toEntity(final Place place, final UserInfo userInfo, final Category category) {
+        return new Ticket(
+                title,
+                content,
+                runningTime,
+                openDate,
+                endDate,
+                startDate,
+                place,
+                userInfo.getUserId(),
+                userInfo.getUserType(),
+                category
+        );
+    }
+}
