@@ -1,0 +1,14 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: reservation-service
+  profiles:
+    active: local
+  config:
+    import: optional:configserver:http://localhost:8888
+
+auth:
+  token:
+    secretKey: ${SECRET-KEY}
