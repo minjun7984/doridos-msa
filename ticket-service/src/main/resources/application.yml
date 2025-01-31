@@ -4,29 +4,12 @@ server:
 spring:
   application:
     name: ticket-service
-  h2:
-    console:
-      enabled: true
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  sql:
-    init:
-      mode: always
-  data:
-    redis:
-      port: 6379
-      host: localhost
+  profiles:
+    active: local
+  config:
+    import: optional:configserver:http://localhost:8888
 
 auth:
   token:
     secretKey: ${SECRET-KEY}
 
-logging:
-  level:
-    org:
-      springframework=DEBUG:
