@@ -1,6 +1,13 @@
 package kr.doridos.ticketservice.ticket.service;
 
 import kr.doridos.ticketservice.category.entity.Category;
+import kr.doridos.ticketservice.schedule.entity.Schedule;
+import kr.doridos.ticketservice.schedule.entity.ScheduleSeat;
+import kr.doridos.ticketservice.schedule.fixture.ScheduleFixture;
+import kr.doridos.ticketservice.schedule.fixture.ScheduleSeatFixture;
+import kr.doridos.ticketservice.schedule.repository.ScheduleRepository;
+import kr.doridos.ticketservice.schedule.repository.ScheduleSeatRepository;
+import kr.doridos.ticketservice.ticket.dto.TicketInfoFeignResponse;
 import kr.doridos.ticketservice.ticket.dto.TicketInfoResponse;
 import kr.doridos.ticketservice.ticket.dto.TicketPageResponse;
 import kr.doridos.ticketservice.ticket.entity.Ticket;
@@ -37,6 +44,12 @@ public class TicketServiceTest {
 
     @Mock
     private TicketRepository ticketRepository;
+
+    @Mock
+    private ScheduleRepository scheduleRepository;
+
+    @Mock
+    private ScheduleSeatRepository scheduleSeatRepository;
 
     private List<Ticket> tickets;
     private Category parentCategory;
@@ -76,6 +89,27 @@ public class TicketServiceTest {
                 softly.assertThat(ticketInfoResponse.getStartDate()).isEqualTo(ticket.getStartDate());
                 softly.assertThat(ticketInfoResponse.getPlace()).isEqualTo(ticket.getPlace().getName());
                 softly.assertThat(ticketInfoResponse.getCategoryName()).isEqualTo(ticket.getCategory().getName());
+            });
+        }
+
+        @Test
+        void 티켓_상세_조회에_성공한다() {
+            Ticket ticket = TicketFixture.티켓_생성();
+            Schedule schedule = ScheduleFixture.스케줄_생성();
+            List<ScheduleSeat> scheduleSeat = List.of(ScheduleSeatFixture.좌석생성());
+
+            given(ticketRepository.findById(ticket.getId())).willReturn(Optional.of(ticket));
+            given(scheduleRepository.findById(schedule.getId())).willReturn(Optional.of(schedule));
+            given(scheduleSeatRepository.findAllById(List.of(1L))).willReturn(scheduleSeat);
+
+            List<TicketInfoFeignResponse> ticketInfoResponse = ticketService.getReservationsWithSeatsByTicketAndSchedule(1L, 1L, List.of(1L));
+
+            assertSoftly(softly -> {
+                softly.assertThat(ticketInfoResponse.get(0).ticketTitle()).isEqualTo(ticket.getTitle());
+                softly.assertThat(ticketInfoResponse.get(0).startDate()).isEqualTo(schedule.getStartDate());
+                softly.assertThat(ticketInfoResponse.get(0).seatId()).isEqualTo(scheduleSeat.get(0).getId());
+                softly.assertThat(ticketInfoResponse.get(0).seatSection()).isEqualTo(scheduleSeat.get(0).getSection());
+                softly.assertThat(ticketInfoResponse.get(0).seatNum()).isEqualTo(scheduleSeat.get(0).getSeatNum());
             });
         }
 
