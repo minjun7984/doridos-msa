@@ -11,4 +11,7 @@ public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, Long
     @EntityGraph(attributePaths = "schedule")
     List<ScheduleSeat> findAllByScheduleId(Long scheduleId);
 
+    List<ScheduleSeat> findByIdIn(List<Long> seatIds);
+
+
 }

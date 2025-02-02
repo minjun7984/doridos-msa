@@ -19,6 +19,7 @@ import kr.doridos.ticketservice.ticket.exception.OpenDateNotCorrectException;
 import kr.doridos.ticketservice.ticket.exception.TicketNotFoundException;
 import kr.doridos.ticketservice.ticket.exception.UserNotTicketManagerException;
 import kr.doridos.ticketservice.ticket.repository.TicketRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @Transactional
 public class ScheduleService {
 
@@ -86,6 +88,14 @@ public class ScheduleService {
 
         final List<ScheduleSeat> seats = scheduleSeatRepository.findAllByScheduleId(scheduleId);
         return ScheduleSeatResponse.from(seats);
+    }
+
+    @Transactional
+    public void updateSeatStatus(List<Long> seats) {
+        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByIdIn(seats);
+        scheduleSeats.forEach(ScheduleSeat::reserveSeatStatus);
+
+        scheduleSeatRepository.saveAll(scheduleSeats);
     }
 
     private void validateDuplicateScheduleTime(LocalDateTime startDate, LocalDateTime endDate, Ticket ticket) {
