@@ -1,6 +1,8 @@
 package kr.doridos.reservationservice.reservation.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import kr.doridos.common.exception.ErrorCode;
+import kr.doridos.reservationservice.kafka.SeatKafkaProducer;
 import kr.doridos.reservationservice.redisson.DistributedLock;
 import kr.doridos.reservationservice.reservation.client.TicketFeignClient;
 import kr.doridos.reservationservice.reservation.client.response.TicketInfoFeignResponse;
@@ -26,14 +28,17 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final TicketFeignClient ticketFeignClient;
+    private final SeatKafkaProducer seatKafkaProducer;
 
-    public ReservationService(final ReservationRepository reservationRepository, final TicketFeignClient ticketFeignClient) {
+
+    public ReservationService(final ReservationRepository reservationRepository, final TicketFeignClient ticketFeignClient, final SeatKafkaProducer seatKafkaProducer) {
         this.reservationRepository = reservationRepository;
         this.ticketFeignClient = ticketFeignClient;
+        this.seatKafkaProducer = seatKafkaProducer;
     }
 
     @DistributedLock(key = "request.seatIds", paramIndexes = {1})
-    public RegisterReservationResponse registerReservation(final Long userId, final ReservationRequest request) {
+    public RegisterReservationResponse registerReservation(final Long userId, final ReservationRequest request) throws JsonProcessingException {
         final List<Long> seats = request.getSeatIds();
 
         validateSeatsSize(request.getSeatIds(), seats);
@@ -59,7 +64,8 @@ public class ReservationService {
                         .build())
                 .collect(Collectors.toList());
         reservationRepository.saveAll(reservations);
-        // TODO 서비스 통신 발생 -> 스케쥴 좌석의 상태를 변경시키는 카프카 이벤트 발행
+
+        seatKafkaProducer.seatReservationEvent(seats);
         return RegisterReservationResponse.of(reservations);
     }
 

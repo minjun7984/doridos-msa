@@ -1,5 +1,6 @@
 package kr.doridos.reservationservice.reservation.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import kr.doridos.common.auth.AuthUser;
 import kr.doridos.common.auth.UserInfo;
 import kr.doridos.reservationservice.reservation.dto.RegisterReservationResponse;
@@ -22,7 +23,7 @@ public class ReservationController {
 
     @PostMapping("/reservations")
     public ResponseEntity<RegisterReservationResponse> registerReservation(@AuthUser final UserInfo userInfo,
-                                                                           @RequestBody final ReservationRequest request) {
+                                                                           @RequestBody final ReservationRequest request) throws JsonProcessingException {
         return ResponseEntity.ok(reservationService.registerReservation(userInfo.getUserId(), request));
     }
 
