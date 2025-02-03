@@ -1,65 +1,33 @@
-# **DOSTicket**
+# **모놀리식 구조의 아키텍처를 MSA 구조로 전환하는 프로젝트**
 
 ## 🏷 **프로젝트 개요**
-**DOSTicket**은 사용자들이 공연, 영화, 스포츠 경기 등 다양한 이벤트의 티켓을 신속하고 간편하게 예매할 수 있는 서비스를 제공합니다. 특히, 예매 트래픽이 급증하는 순간에도 안정적으로 좌석을 선택하고 결제를 완료할 수 있는 시스템을 목표로 개발되었습니다.
-프로젝트 이름 **DOSTicket**은 팀명 도리도스(DoriDOS)에서 영감을 받았으며, 동시에 많은 트래픽이 몰리는 상황에서도 안정적인 예매 경험을 제공한다는 의미를 담고 있습니다.
-
-</br>
-
-## 🏢 **팀 소개**
-- **팀명**: 도리도스 (DoriDOS)
-- **팀명 의미**: 도리도스는 수많은 곳에서 발생하는 대량 트래픽을 효과적으로 처리하는 시스템을 의미하는 *DOS 공격*에서 착안하였습니다. 티켓 예매 과정에서 많은 사용자가 동시에 접속하는 상황을 빠르고 안정적으로 처리하는 것을 목표로 하고 있습니다.
-
-</br>
-
-## 🎯 **주요 기능**
-1. **티켓 예매**: 실시간으로 좌석 상태를 확인하고, 원하는 좌석을 선택하여 예매할 수 있습니다.
-
-     [-> 좌석 선택 시 분산 락을 이용한 동시성 문제 해결 과정 포스팅](https://alswns7984.tistory.com/92)
-</br>
-
-2. **결제 시스템 연동**: 토스 간편 결제 기능을 제공하여 빠르고 안전하게 결제를 진행합니다.
-
-     [-> 토스 간편 결제 시스템 연동 포스팅](https://alswns7984.tistory.com/95)
-</br>
-
-3. **예매 내역 조회**: 사용자는 자신이 예매한 내역을 언제든지 확인하고 관리할 수 있습니다.
-</br>
-
-4. **소셜 로그인 지원**: OAuth2를 이용한 소셜 로그인 기능을 제공해 간편히 로그인을 진행할 수 있습니다.
-
-     [-> OAuth2 이용한 소셜로그인 구현 1편](https://alswns7984.tistory.com/73)
-
-     [-> OAuth2 이용한 소셜로그인 구현 2편](https://alswns7984.tistory.com/75)
-</br>
-
-5. **API 문서화 (RestDocs 활용)**: Spring RestDocs를 이용해 API를 문서화하였으며, 각 기능별 요청 및 응답 형식에 대한 상세한 정보를 제공합니다.
-
-     [-> Spring RestDocs를 활용한 API 문서화 포스팅](https://alswns7984.tistory.com/26)
-</br>
-
-5. **페이징 기능 제공**: 일반, 카테고리, 날짜별 페이징 기능을 제공합니다.
-
-     [-> QueryDsl을 활용한 페이징 기능 구현 포스팅](https://alswns7984.tistory.com/82)
-</br>
-
-
-## ⚙️ 기술 스택 
-![기술스택](https://github.com/minjun7984/readme-image/blob/main/KakaoTalk_Photo_2024-10-13-19-31-51.jpeg)
-</br>
-</br>
-## 인프라
-![인프라](https://github.com/minjun7984/readme-image/blob/main/KakaoTalk_Photo_2024-10-13-19-31-59.jpeg)
-</br>
-</br>
+기존 Monolithic 구조의 프로젝트를 MSA 구조로 전환한 프로젝트입니다.
+프로젝트는 Ticket, User, Reservation, Payment 4개의 서비스로 분리되어 독립적으로 동작하게 됩니다.
+MSA로 전환하는 경험에 초점을 맞추고 진행했습니다.
 
 ## 배포구성도
 ![구성도](https://github.com/minjun7984/readme-image/blob/main/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202025-02-03%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%205.08.06.png)
 </br>
 </br>
+
+## 구현과정
+모놀리식 구조의 애플리케이션을 MSA로 전환하는 과정들을 블로그에 포스팅했습니다.
+
+1. [[MSA 전환하기 1편] 모놀리식 아키텍처와 MSA란 무엇인가](https://alswns7984.tistory.com/106)
+2. [[MSA 전환하기 2편] 멀티 모듈 구성하기](https://alswns7984.tistory.com/120)
+3. [[MSA 전환하기 3편] Service Discovery 적용하기](https://alswns7984.tistory.com/121)
+4. [[MSA 전환하기 4편] Spring Cloud Gateway 구현하기](https://alswns7984.tistory.com/122)
+5. [[MSA 전환하기 5편] Spring Cloud Config 도입하기(+Spring Cloud Bus)](https://alswns7984.tistory.com/123)
+6. [[MSA 전환하기 6편] OpenFeign을 활용한 서비스 간 통신하기](https://alswns7984.tistory.com/124)
+7. [[MSA 전환하기 7편] 서킷 브레이커 적용하기(Resilence4J)](https://alswns7984.tistory.com/125)
+</br>
+</br>
+
 ## 테스트
 - 100개 이상의 테스트코드 작성 
 
 ![테스트](https://github.com/minjun7984/readme-image/blob/main/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202024-10-17%20%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB%201.52.09.png)
 </br>
 </br>
+
+
