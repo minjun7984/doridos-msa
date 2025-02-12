@@ -2,7 +2,7 @@ package kr.doridos.reservationservice.reservation.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kr.doridos.common.exception.ErrorCode;
-import kr.doridos.reservationservice.kafka.SeatKafkaProducer;
+import kr.doridos.reservationservice.kafka.producer.SeatKafkaProducer;
 import kr.doridos.reservationservice.redisson.DistributedLock;
 import kr.doridos.reservationservice.reservation.client.TicketFeignClient;
 import kr.doridos.reservationservice.reservation.client.response.TicketInfoFeignResponse;
@@ -100,7 +100,7 @@ public class ReservationService {
     }
 
     private void validateSeatsSize(final List<Long> seatsId, final List<Long> seats) {
-        if (seats.size() == 0 || seats.size() != seatsId.size()) {
+        if (seats.isEmpty() || seats.size() != seatsId.size()) {
             throw new SeatNotFoundException(ErrorCode.SEAT_NOT_FOUND);
         }
     }
