@@ -1,1 +1,7 @@
-rootProject.name = 'dos-ticket'
+rootProject.name = 'tickettalk'
+
+include 'common'
+include 'user-service'
+include 'ticket-service'
+include 'reservation-service'
+include 'payment-service'
