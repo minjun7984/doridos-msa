@@ -20,6 +20,8 @@ MSA로 전환하는 경험에 초점을 맞추고 진행했습니다.
 5. [[MSA 전환하기 5편] Spring Cloud Config 도입하기(+Spring Cloud Bus)](https://alswns7984.tistory.com/123)
 6. [[MSA 전환하기 6편] OpenFeign을 활용한 서비스 간 통신하기](https://alswns7984.tistory.com/124)
 7. [[MSA 전환하기 7편] 서킷 브레이커 적용하기(Resilence4J)](https://alswns7984.tistory.com/125)
+8. [[MSA 전환하기 8편] Kafka를 활용한 이벤트 기반 아키텍처 구축하기](https://alswns7984.tistory.com/127)
+9. [[MSA 전환하기 9편] Transactional Outbox Pattern을 사용해 분산시스템에서 메시지 발행 신뢰성 보장하기](https://alswns7984.tistory.com/128)
 </br>
 </br>
 
