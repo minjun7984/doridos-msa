@@ -8,3 +8,7 @@ spring:
     active: local
   config:
     import: optional:configserver:http://localhost:8888
+
+auth:
+  token:
+    secretKey: ${SECRET-KEY}

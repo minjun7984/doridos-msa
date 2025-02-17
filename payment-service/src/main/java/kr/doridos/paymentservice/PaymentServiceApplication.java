@@ -7,7 +7,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableFeignClients
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication (
+        scanBasePackages = { "kr.doridos.paymentservice", "kr.doridos.common"}
+)
 public class PaymentServiceApplication {
 
     public static void main(String[] args) {
