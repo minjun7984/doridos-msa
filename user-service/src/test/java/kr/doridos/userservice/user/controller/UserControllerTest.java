@@ -2,7 +2,6 @@ package kr.doridos.userservice.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.doridos.userservice.auth.service.AuthService;
 import kr.doridos.userservice.auth.support.jwt.JwtProvider;
 import kr.doridos.userservice.user.dto.NicknameUpdateRequest;
 import kr.doridos.userservice.user.dto.UserSignUpRequest;
@@ -17,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 @AutoConfigureRestDocs
 @SpringBootTest
 class UserControllerTest {
@@ -41,13 +42,10 @@ class UserControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    AuthService authService;
-
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     JwtProvider jwtProvider;
@@ -73,7 +71,7 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userSignUpRequest)))
                 .andExpect(status().isCreated())
-                .andDo(document("유저 회원가입",
+                .andDo(document("유저 회원가입 성공",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())
                 ));
@@ -92,7 +90,7 @@ class UserControllerTest {
                         .content(objectMapper.writeValueAsString(userSignUpRequest)))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value("이미 가입한 유저입니다."))
-                .andDo(document("유저 회원가입 이메일 중복",
+                .andDo(document("중복된 이메일로 회원가입",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())
                 ));
@@ -111,7 +109,7 @@ class UserControllerTest {
                         .content(objectMapper.writeValueAsString(userSignUpRequest)))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value("이미 존재하는 닉네임입니다."))
-                .andDo(document("유저 회원가입 닉네임 중복",
+                .andDo(document("중복된 닉네임으로 회원가입",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())
                 ));
@@ -122,7 +120,7 @@ class UserControllerTest {
         mockMvc.perform(get("/users/me")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
-                .andDo(document("유저 정보조회",
+                .andDo(document("유저 정보조회 성공",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())
                 ));
@@ -137,7 +135,7 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(nicknameRequest)))
                 .andExpect(status().isNoContent())
-                .andDo(document("닉네임 변경",
+                .andDo(document("닉네임 변경 성공",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())
                 ));
@@ -153,7 +151,7 @@ class UserControllerTest {
                         .content(objectMapper.writeValueAsString(nicknameRequest)))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value("이미 존재하는 닉네임입니다."))
-                .andDo(document("닉네임 변경",
+                .andDo(document("이미 존재하는 닉네임 변경",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())
                 ));
