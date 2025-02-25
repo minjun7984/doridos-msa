@@ -1,5 +1,8 @@
 package kr.doridos.userservice.user.entity;
 
+import lombok.Getter;
+
+@Getter
 public enum UserType {
     TICKET_MANAGER(Authority.TICKET_MANAGER),
     USER(Authority.USER),
@@ -9,9 +12,6 @@ public enum UserType {
 
     UserType(final String authority) {
         this.authority = authority;
-    }
-    public String getAuthority() {
-        return authority;
     }
 
     public static class Authority {
