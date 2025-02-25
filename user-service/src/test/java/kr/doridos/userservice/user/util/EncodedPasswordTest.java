@@ -1,4 +1,4 @@
-package kr.doridos.userservice.user;
+package kr.doridos.userservice.user.util;
 
 import kr.doridos.userservice.user.entity.EncodedPassword;
 import org.junit.jupiter.api.DisplayName;
