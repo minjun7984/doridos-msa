@@ -1,0 +1,39 @@
+{
+  "properties": {
+    "id": {
+      "type": "long"
+    },
+    "title": {
+      "type": "text",
+      "analyzer": "custom-nori-analyzer",
+      "fields": {
+        "ngram": {
+          "type": "text",
+          "analyzer": "custom-ngram-analyzer"
+        }
+      }
+    },
+    "content": {
+      "type": "text",
+      "analyzer": "custom-nori-analyzer"
+    },
+    "runningTime": {
+      "type": "text"
+    },
+    "startDate": {
+      "type": "date",
+      "format": "yyyy-MM-dd'T'HH:mm:ss.SSS||epoch_millis"
+    },
+    "endDate": {
+      "type": "date",
+      "format": "yyyy-MM-dd'T'HH:mm:ss.SSS||epoch_millis"
+    },
+    "place": {
+      "type": "text",
+      "analyzer": "custom-nori-analyzer"
+    },
+    "category": {
+      "type": "keyword"
+    }
+  }
+}

@@ -10,7 +10,9 @@ import kr.doridos.ticketservice.place.repository.PlaceRepository;
 import kr.doridos.ticketservice.ticket.dto.TicketCreateRequest;
 import kr.doridos.ticketservice.ticket.dto.TicketUpdateRequest;
 import kr.doridos.ticketservice.ticket.entity.Ticket;
+import kr.doridos.ticketservice.ticket.entity.TicketDocument;
 import kr.doridos.ticketservice.ticket.exception.*;
+import kr.doridos.ticketservice.ticket.repository.TicketElasticsearchRepository;
 import kr.doridos.ticketservice.ticket.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +26,13 @@ public class TicketManagerService {
     private final TicketRepository ticketRepository;
     private final CategoryRepository categoryRepository;
     private final PlaceRepository placeRepository;
+    private final TicketElasticsearchRepository ticketElasticsearchRepository;
 
-    public TicketManagerService(final TicketRepository ticketRepository, final CategoryRepository categoryRepository, final PlaceRepository placeRepository) {
+    public TicketManagerService(final TicketRepository ticketRepository, final CategoryRepository categoryRepository, final PlaceRepository placeRepository, final TicketElasticsearchRepository ticketElasticsearchRepository) {
         this.ticketRepository = ticketRepository;
         this.categoryRepository = categoryRepository;
         this.placeRepository = placeRepository;
+        this.ticketElasticsearchRepository = ticketElasticsearchRepository;
     }
 
     public Long createTicket(final TicketCreateRequest request, final UserInfo userInfo) {
@@ -43,7 +47,7 @@ public class TicketManagerService {
 
         final Ticket ticket = request.toEntity(place, userInfo, category);
         ticketRepository.save(ticket);
-
+        ticketElasticsearchRepository.save(TicketDocument.from(ticket, category, place));
         return ticket.getId();
     }
 
