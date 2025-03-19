@@ -21,7 +21,8 @@ spring:
     redis:
       port: 6379
       host: localhost
-
+  elasticsearch:
+    uris: localhost:9200
 auth:
   token:
     secretKey: TESTGUYGUYGKUYEOUIPWOEIDUFUHIUHOIUHOUIHOIUHOUHDVDNHLADSUHFWEWEQWERWQgI3nVPEahqxeY8qbPSFGyzyEVxnl4AQcrnVneI
