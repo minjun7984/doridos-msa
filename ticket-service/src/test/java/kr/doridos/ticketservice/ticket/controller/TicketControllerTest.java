@@ -1,25 +1,17 @@
 package kr.doridos.ticketservice.ticket.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import kr.doridos.ticketservice.category.repository.CategoryRepository;
 import kr.doridos.ticketservice.place.repository.PlaceRepository;
-import kr.doridos.ticketservice.ticket.entity.Ticket;
 import kr.doridos.ticketservice.ticket.repository.TicketRepository;
 import kr.doridos.ticketservice.ticket.fixture.CategoryFixture;
 import kr.doridos.ticketservice.ticket.fixture.PlaceFixture;
 import kr.doridos.ticketservice.ticket.fixture.TicketFixture;
-import kr.doridos.ticketservice.ticket.service.TicketService;
+import kr.doridos.ticketservice.util.IntegrationTestSupport;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,13 +19,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureRestDocs
-@AutoConfigureMockMvc
-@SpringBootTest
-@ActiveProfiles("test")
-@SuppressWarnings("NonAsciiCharacters")
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class TicketControllerTest {
+public class TicketControllerTest extends IntegrationTestSupport {
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,7 +35,6 @@ public class TicketControllerTest {
 
     @Autowired
     private PlaceRepository placeRepository;
-
 
     @BeforeEach
     public void setUp() {

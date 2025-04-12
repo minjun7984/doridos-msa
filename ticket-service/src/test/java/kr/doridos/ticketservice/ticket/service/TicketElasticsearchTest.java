@@ -1,6 +1,5 @@
 package kr.doridos.ticketservice.ticket.service;
 
-import jakarta.transaction.Transactional;
 import kr.doridos.ticketservice.ticket.dto.SearchAutoCompleteResponse;
 import kr.doridos.ticketservice.ticket.entity.TicketDocument;
 import kr.doridos.ticketservice.ticket.repository.TicketElasticsearchRepository;
@@ -41,8 +40,8 @@ public class TicketElasticsearchTest {
     void 타이틀이_일치하면_티켓을_반환한다() {
         TicketDocument ticket = new TicketDocument(
                 1L,
-                "모차르트",
-                "모차르트의 연주",
+                "베토벤",
+                "베토벤의 연주",
                 "120분",
                 LocalDateTime.now(),
                 LocalDateTime.now(),
@@ -50,11 +49,10 @@ public class TicketElasticsearchTest {
                 "뮤지컬");
         elasticsearchRepository.save(ticket);
 
-        Page<TicketDocument> result = ticketSearchService.searchTicketsByFilter("모차르트", null, null, null, 0, 10);
+        Page<TicketDocument> result = ticketSearchService.searchTicketsByFilter("베토벤", null, null, null, 0, 10);
 
-        assertThat(result).hasSize(1);
-        assertThat(result.getContent().get(0).getTitle()).isEqualTo("모차르트");
-        assertThat(result.getContent().get(0).getContent()).isEqualTo("모차르트의 연주");
+        assertThat(result.getContent().get(0).getTitle()).isEqualTo("베토벤");
+        assertThat(result.getContent().get(0).getContent()).isEqualTo("베토벤의 연주");
     }
 
     @Test

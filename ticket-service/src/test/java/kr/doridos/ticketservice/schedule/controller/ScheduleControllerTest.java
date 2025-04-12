@@ -12,13 +12,10 @@ import kr.doridos.ticketservice.ticket.entity.Ticket;
 import kr.doridos.ticketservice.ticket.fixture.TicketFixture;
 import kr.doridos.ticketservice.ticket.fixture.TokenFixture;
 import kr.doridos.ticketservice.ticket.repository.TicketRepository;
+import kr.doridos.ticketservice.util.IntegrationTestSupport;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 
@@ -29,13 +26,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SuppressWarnings("NonAsciiCharacters")
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@ActiveProfiles("test")
-@AutoConfigureRestDocs
-@AutoConfigureMockMvc
-@SpringBootTest
-class ScheduleControllerTest {
+class ScheduleControllerTest extends IntegrationTestSupport {
 
     @Autowired
     private MockMvc mockMvc;

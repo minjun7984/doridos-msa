@@ -5,11 +5,10 @@ import co.elastic.clients.elasticsearch.core.SearchRequest;
 import kr.doridos.ticketservice.ticket.dto.SearchAutoCompleteResponse;
 import kr.doridos.ticketservice.ticket.entity.TicketDocument;
 import kr.doridos.ticketservice.ticket.repository.TicketElasticsearchRepository;
+import kr.doridos.ticketservice.util.UnitTestSupport;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 
 import java.io.IOException;
@@ -19,10 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.BDDMockito.*;
 
-@ExtendWith(MockitoExtension.class)
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@SuppressWarnings("NonAsciiCharacters")
-class TicketSearchServiceTest {
+class TicketSearchServiceTest extends UnitTestSupport {
 
     @Mock
     private TicketElasticsearchRepository ticketElasticsearchRepository;
