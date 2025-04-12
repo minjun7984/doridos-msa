@@ -15,11 +15,10 @@ import kr.doridos.ticketservice.ticket.exception.TicketNotFoundException;
 import kr.doridos.ticketservice.ticket.fixture.CategoryFixture;
 import kr.doridos.ticketservice.ticket.fixture.TicketFixture;
 import kr.doridos.ticketservice.ticket.repository.TicketRepository;
+import kr.doridos.ticketservice.util.UnitTestSupport;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -34,10 +33,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.BDDMockito.given;
 
-@ExtendWith(MockitoExtension.class)
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@SuppressWarnings("NonAsciiCharacters")
-public class TicketServiceTest {
+public class TicketServiceTest extends UnitTestSupport {
 
     @InjectMocks
     private TicketService ticketService;

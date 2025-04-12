@@ -1,26 +1,19 @@
 package kr.doridos.ticketservice.ticket.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import kr.doridos.ticketservice.ticket.dto.TicketCreateRequest;
 import kr.doridos.ticketservice.ticket.dto.TicketUpdateRequest;
 import kr.doridos.ticketservice.ticket.fixture.TicketFixture;
 import kr.doridos.ticketservice.ticket.fixture.TokenFixture;
 import kr.doridos.ticketservice.ticket.repository.TicketRepository;
-import kr.doridos.ticketservice.ticket.service.TicketManagerService;
+
+import kr.doridos.ticketservice.util.IntegrationTestSupport;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -29,13 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureRestDocs
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-@SpringBootTest
-@SuppressWarnings("NonAsciiCharacters")
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class TicketManagerControllerTest {
+class TicketManagerControllerTest extends IntegrationTestSupport {
 
     @Autowired
     private MockMvc mockMvc;

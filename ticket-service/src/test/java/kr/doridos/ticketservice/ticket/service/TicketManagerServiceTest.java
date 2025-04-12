@@ -13,12 +13,12 @@ import kr.doridos.ticketservice.ticket.exception.OpenDateNotCorrectException;
 import kr.doridos.ticketservice.ticket.exception.PlaceNotFoundException;
 import kr.doridos.ticketservice.ticket.exception.UserNotTicketManagerException;
 import kr.doridos.ticketservice.ticket.fixture.TicketFixture;
+import kr.doridos.ticketservice.ticket.repository.TicketElasticsearchRepository;
 import kr.doridos.ticketservice.ticket.repository.TicketRepository;
+import kr.doridos.ticketservice.util.IntegrationTestSupport;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -28,10 +28,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
-@ExtendWith(MockitoExtension.class)
-@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@SuppressWarnings("NonAsciiCharacters")
-class TicketManagerServiceTest {
+class TicketManagerServiceTest extends IntegrationTestSupport {
 
     @InjectMocks
     private TicketManagerService ticketManagerService;
@@ -44,6 +41,9 @@ class TicketManagerServiceTest {
 
     @Mock
     private CategoryRepository categoryRepository;
+
+    @Mock
+    private TicketElasticsearchRepository ticketElasticsearchRepository;
 
 
     Category category = new Category(1L, "뮤지컬");
