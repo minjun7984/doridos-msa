@@ -1,0 +1,32 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: ${USERNAME}
+    password: ${PASSWORD}
+  cloud:
+    config:
+      server:
+        git:
+          default-label: main
+          uri: git@github.com:minjun7984/doridos-msa-config.git
+          search-paths: config
+          ignore-local-ssh-settings: true
+          host-key: ${HOST_KEY}
+          host-key-algorithm: ecdsa-sha2-nistp256
+          private-key: |
+            -----BEGIN EC PRIVATE KEY-----
+            ${PRIVATE_KEY}
+            -----END EC PRIVATE KEY-----
+          passphrase: passphrase
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,busrefresh
