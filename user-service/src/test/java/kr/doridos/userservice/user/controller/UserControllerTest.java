@@ -67,7 +67,7 @@ class UserControllerTest {
                 "01012341234",
                 UserType.USER);
 
-        mockMvc.perform(post("/users/signup")
+        mockMvc.perform(post("/api/v1/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userSignUpRequest)))
                 .andExpect(status().isCreated())
@@ -85,7 +85,7 @@ class UserControllerTest {
                 "01012341234",
                 UserType.USER);
 
-        mockMvc.perform(post("/users/signup")
+        mockMvc.perform(post("/api/v1/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userSignUpRequest)))
                 .andExpect(status().isConflict())
@@ -104,7 +104,7 @@ class UserControllerTest {
                 "01012341234",
                 UserType.USER);
 
-        mockMvc.perform(post("/users/signup")
+        mockMvc.perform(post("/api/v1/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userSignUpRequest)))
                 .andExpect(status().isConflict())
@@ -117,7 +117,7 @@ class UserControllerTest {
 
     @Test
     void 유저정보_조회에_성공한다() throws Exception {
-        mockMvc.perform(get("/users/me")
+        mockMvc.perform(get("/api/v1/users/me")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andDo(document("유저 정보조회 성공",
@@ -130,7 +130,7 @@ class UserControllerTest {
     void 닉네임_변경에_성공한다() throws Exception {
         NicknameUpdateRequest nicknameRequest = new NicknameUpdateRequest("도리도스");
 
-        mockMvc.perform(patch("/users/me/nickname")
+        mockMvc.perform(patch("/api/v1/users/me/nickname")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(nicknameRequest)))
@@ -145,7 +145,7 @@ class UserControllerTest {
     void 닉네임이_존재하면_예외를_반환한다() throws Exception {
         NicknameUpdateRequest nicknameRequest = new NicknameUpdateRequest("test");
 
-        mockMvc.perform(patch("/users/me/nickname")
+        mockMvc.perform(patch("/api/v1/users/me/nickname")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(nicknameRequest)))

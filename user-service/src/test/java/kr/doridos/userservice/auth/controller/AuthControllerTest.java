@@ -65,7 +65,7 @@ class AuthControllerTest {
     void 로그인에_성공한다() throws Exception {
         SignInRequest signInRequest = new SignInRequest("test@test.com", "12345678a!");
 
-        mockMvc.perform(post("/auth/signin")
+        mockMvc.perform(post("/api/v1/auth/signin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(signInRequest)))
                 .andExpect(status().isOk())
@@ -80,7 +80,7 @@ class AuthControllerTest {
     void 이메일이_다르면_로그인에_실패한다401() throws Exception {
         SignInRequest signInRequest = new SignInRequest("test1@test.com", "12345678a!");
 
-        mockMvc.perform(post("/auth/signin")
+        mockMvc.perform(post("/api/v1/auth/signin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(signInRequest)))
                 .andExpect(status().is(ErrorCode.SIGN_IN_FAIL.getStatus()))
@@ -95,7 +95,7 @@ class AuthControllerTest {
     void 패스워드가_일치하지_않으면_로그인에_실패한다401() throws Exception {
         SignInRequest signInRequest = new SignInRequest("test@test.com", "12345678aa!");
 
-        mockMvc.perform(post("/auth/signin")
+        mockMvc.perform(post("/api/v1/auth/signin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(signInRequest)))
                 .andExpect(status().is(ErrorCode.SIGN_IN_FAIL.getStatus()))
