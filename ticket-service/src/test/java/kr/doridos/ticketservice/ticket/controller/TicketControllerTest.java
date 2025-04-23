@@ -47,7 +47,7 @@ public class TicketControllerTest extends IntegrationTestSupport {
     void 티켓_조회에_성공한다_200() throws Exception {
         Long ticketId = TicketFixture.티켓_생성().getId();
 
-        mockMvc.perform(get("/tickets/" + ticketId)
+        mockMvc.perform(get("/api/v1/tickets/" + ticketId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketId)))
                 .andExpect(status().isOk())
@@ -59,7 +59,7 @@ public class TicketControllerTest extends IntegrationTestSupport {
 
     @Test
     void 티켓_페이징_조회에_성공한다200() throws Exception {
-        mockMvc.perform(get("/tickets")
+        mockMvc.perform(get("/api/v1/tickets")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("ticketPaging",
@@ -72,7 +72,7 @@ public class TicketControllerTest extends IntegrationTestSupport {
     void 카테고리로_티켓_페이징_조회에_성공한다200() throws Exception {
         Long categoryId = TicketFixture.티켓_생성().getCategory().getId();
 
-        mockMvc.perform(get("/tickets?" + categoryId)
+        mockMvc.perform(get("/api/v1/tickets?" + categoryId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(categoryId)))
                 .andExpect(status().isOk())
@@ -87,7 +87,7 @@ public class TicketControllerTest extends IntegrationTestSupport {
         String startDate = "startDate=2024-08-20";
         String endDate = "endDate=2024-08-20";
 
-        mockMvc.perform(get("/tickets?" + startDate + "&" + endDate)
+        mockMvc.perform(get("/api/v1/tickets?" + startDate + "&" + endDate)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("ticketDatePaging",

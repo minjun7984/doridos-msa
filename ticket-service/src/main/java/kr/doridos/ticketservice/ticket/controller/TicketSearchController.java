@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@RestController
 @Slf4j
-@RequestMapping("/tickets/search")
+@RestController
+@RequestMapping("/api/v1/tickets/search")
 @RequiredArgsConstructor
 public class TicketSearchController {
 

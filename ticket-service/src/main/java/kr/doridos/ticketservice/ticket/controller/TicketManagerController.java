@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/manager")
+@RequestMapping("/api/v1/manager")
 public class TicketManagerController {
 
     private final TicketManagerService ticketManagerService;

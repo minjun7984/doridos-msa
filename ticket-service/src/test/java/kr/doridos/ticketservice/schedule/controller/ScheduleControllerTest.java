@@ -64,7 +64,7 @@ class ScheduleControllerTest extends IntegrationTestSupport {
                 .endTime(LocalDateTime.of(2024, 8, 22, 9, 0))
                 .build();
 
-        mockMvc.perform(post("/schedules")
+        mockMvc.perform(post("/api/v1/schedules")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(scheduleCreateRequest)))
@@ -83,7 +83,7 @@ class ScheduleControllerTest extends IntegrationTestSupport {
                 .endTime(LocalDateTime.of(2024, 8, 22, 9, 0))
                 .build();
 
-        mockMvc.perform(post("/schedules")
+        mockMvc.perform(post("/api/v1/schedules")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(scheduleCreateRequest)))
@@ -99,7 +99,7 @@ class ScheduleControllerTest extends IntegrationTestSupport {
                 .endTime(LocalDateTime.of(2024, 8, 22, 9, 0))
                 .build();
 
-        mockMvc.perform(post("/schedules")
+        mockMvc.perform(post("/api/v1/schedules")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(scheduleCreateRequest)))
@@ -115,7 +115,7 @@ class ScheduleControllerTest extends IntegrationTestSupport {
                 .endTime(ScheduleFixture.스케줄_생성().getEndDate())
                 .build();
 
-        mockMvc.perform(post("/schedules")
+        mockMvc.perform(post("/api/v1/schedules")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(scheduleCreateRequest)))
@@ -127,7 +127,7 @@ class ScheduleControllerTest extends IntegrationTestSupport {
     public void 티켓에_해당하는_스케줄을_조회한다200() throws Exception {
         Long ticketId = TicketFixture.티켓_생성().getId();
 
-        mockMvc.perform(get("/tickets/" + ticketId + "/schedules")
+        mockMvc.perform(get("/api/v1/tickets/" + ticketId + "/schedules")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketId)))
                 .andExpect(status().isOk())
@@ -142,7 +142,7 @@ class ScheduleControllerTest extends IntegrationTestSupport {
         Long ticketId = TicketFixture.티켓_생성().getId();
         Long scheduleId = ScheduleFixture.스케줄_생성().getId();
 
-        mockMvc.perform(get("/tickets/{ticketId}/schedules/{scheduleId}/seats", ticketId, scheduleId)
+        mockMvc.perform(get("/api/v1/tickets/{ticketId}/schedules/{scheduleId}/seats", ticketId, scheduleId)
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -160,7 +160,7 @@ class ScheduleControllerTest extends IntegrationTestSupport {
         scheduleRepository.save(schedule);
 
         // 스케줄 좌석 조회 요청
-        mockMvc.perform(get("/tickets/{ticketId}/schedules/{scheduleId}/seats", ticket.getId(), schedule.getId())
+        mockMvc.perform(get("/api/v1/tickets/{ticketId}/schedules/{scheduleId}/seats", ticket.getId(), schedule.getId())
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())

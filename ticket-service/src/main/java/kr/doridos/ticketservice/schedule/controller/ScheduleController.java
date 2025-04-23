@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;

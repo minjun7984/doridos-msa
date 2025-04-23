@@ -50,7 +50,7 @@ class TicketManagerControllerTest extends IntegrationTestSupport {
     void 티켓생성에_성공한다201() throws Exception {
         TicketCreateRequest ticketCreateRequest = TicketFixture.티켓_생성_요청();
 
-        mockMvc.perform(post("/manager/tickets")
+        mockMvc.perform(post("/api/v1/manager/tickets")
                         .header("Authorization", "Bearer " + ticketManagerToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketCreateRequest)))
@@ -66,7 +66,7 @@ class TicketManagerControllerTest extends IntegrationTestSupport {
     void 티켓_생성시_일반유저라면_예외가_발생한다401() throws Exception {
         TicketCreateRequest ticketCreateRequest = TicketFixture.티켓_생성_요청();
 
-        mockMvc.perform(post("/manager/tickets")
+        mockMvc.perform(post("/api/v1/manager/tickets")
                         .header("Authorization", "Bearer " + userToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketCreateRequest)))
@@ -90,7 +90,7 @@ class TicketManagerControllerTest extends IntegrationTestSupport {
                 .placeId(1L)
                 .categoryId(100L).build();
 
-        mockMvc.perform(post("/manager/tickets")
+        mockMvc.perform(post("/api/v1/manager/tickets")
                         .header("Authorization", "Bearer " + ticketManagerToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketCreateRequest)))
@@ -110,7 +110,7 @@ class TicketManagerControllerTest extends IntegrationTestSupport {
                 .placeId(100L)
                 .categoryId(1L).build();
 
-        mockMvc.perform(post("/manager/tickets")
+        mockMvc.perform(post("/api/v1/manager/tickets")
                         .header("Authorization", "Bearer " + ticketManagerToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketCreateRequest)))
@@ -122,7 +122,7 @@ class TicketManagerControllerTest extends IntegrationTestSupport {
     void 티켓수정에_성공한다() throws Exception {
         TicketUpdateRequest ticketUpdateRequest = TicketFixture.티켓_수정_요청();
 
-        mockMvc.perform(patch("/manager/tickets/" + 1)
+        mockMvc.perform(patch("/api/v1/manager/tickets/" + 1)
                         .header("Authorization", "Bearer " + ticketManagerToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketUpdateRequest)))
@@ -144,7 +144,7 @@ class TicketManagerControllerTest extends IntegrationTestSupport {
                 .startDate(LocalDateTime.of(2024, 7, 23, 13, 0))
                 .build();
 
-        mockMvc.perform(patch("/manager/tickets/" + 1)
+        mockMvc.perform(patch("/api/v1/manager/tickets/" + 1)
                         .header("Authorization", "Bearer " + ticketManagerToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketUpdateRequest)))
@@ -163,7 +163,7 @@ class TicketManagerControllerTest extends IntegrationTestSupport {
                 .startDate(LocalDateTime.of(2024, 7, 23, 13, 0))
                 .build();
 
-        mockMvc.perform(patch("/manager/tickets/" + 1)
+        mockMvc.perform(patch("/api/v1/manager/tickets/" + 1)
                         .header("Authorization", "Bearer " + secondTicketManagerToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(ticketUpdateRequest)))

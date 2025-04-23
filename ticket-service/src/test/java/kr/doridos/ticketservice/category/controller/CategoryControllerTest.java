@@ -53,7 +53,7 @@ public class CategoryControllerTest extends IntegrationTestSupport {
     void 카테고리_생성에_성공한다200() throws Exception {
         CategoryRequest request = new CategoryRequest("농구", 1L);
 
-        mockMvc.perform(post("/categories")
+        mockMvc.perform(post("/api/v1/categories")
                         .header("Authorization", "Bearer " + ticketManagerToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -68,7 +68,7 @@ public class CategoryControllerTest extends IntegrationTestSupport {
     void 권한없는_사용자가_카테고리를_생성하려하면_예외가발생한다401() throws Exception {
         CategoryRequest request = new CategoryRequest("농구", 1L);
 
-        mockMvc.perform(post("/categories")
+        mockMvc.perform(post("/api/v1/categories")
                         .header("Authorization", "Bearer " + userToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -84,7 +84,7 @@ public class CategoryControllerTest extends IntegrationTestSupport {
     void 이미존재하는_카테고리네임으로_요쳥하면_예외가_발생한다400() throws Exception {
         CategoryRequest request = new CategoryRequest("스포츠", 1L);
 
-        mockMvc.perform(post("/categories")
+        mockMvc.perform(post("/api/v1/categories")
                         .header("Authorization", "Bearer " + ticketManagerToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
@@ -103,7 +103,7 @@ public class CategoryControllerTest extends IntegrationTestSupport {
         categoryRepository.save(parent);
         categoryRepository.save(child);
 
-        mockMvc.perform(get("/categories")
+        mockMvc.perform(get("/api/v1/categories")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(document("카테고리 조회 성공",
